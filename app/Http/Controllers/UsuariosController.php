@@ -24,10 +24,10 @@ class UsuariosController extends Controller
     {
         $usuario = new Usuario();
 
-        $usuario->nome = $form->nome;
+        $usuario->name = $form->name;
         $usuario->email = $form->email;
-        $usuario->usuario = $form->usuario;
-        $usuario->senha = Hash::make($form->senha);
+        $usuario->username = $form->username;
+        $usuario->password = Hash::make($form->password);
 
         $usuario->save();
 
@@ -40,18 +40,18 @@ class UsuariosController extends Controller
         // Está enviando o formulário
         if ($form->isMethod('POST'))
         {
-            $usuario = $form->usuario;
-            $senha = $form->senha;
+            $usuario = $form->username;
+            $password = $form->password;
 
-            $consulta = Usuario::select('id', 'nome', 'email', 'usuario', 'senha')->where('usuario', $usuario)->get();
+            $consulta = Usuario::select('id', 'name', 'email', 'username', 'password')->where('usuario', $usuario)->get();
 
             // Confere se encontrou algum usuário
             if ($consulta->count())
             {
-                // Confere se a senha está correta
-                if (Hash::check($senha, $consulta[0]->senha))
+                // Confere se a password está correta
+                if (Hash::check($password, $consulta[0]->password))
                 {
-                    unset($consulta[0]->senha);
+                    unset($consulta[0]->password);
 
                     session()->put('usuario', $consulta[0]);
 
@@ -59,8 +59,8 @@ class UsuariosController extends Controller
                 }
             }
 
-            // Login deu errado (usuário ou senha inválidos)
-            return redirect()->route('login')->with('erro', 'Usuário ou senha inválidos.');
+            // Login deu errado (usuário ou password inválidos)
+            return redirect()->route('login')->with('erro', 'Usuário ou password inválidos.');
         }
 
         return view('usuarios.login');
@@ -68,7 +68,7 @@ class UsuariosController extends Controller
 
     public function logout()
     {
-        session()->forget('usuario');
+        session()->forget('username');
         return redirect()->route('home');
     }
 }
