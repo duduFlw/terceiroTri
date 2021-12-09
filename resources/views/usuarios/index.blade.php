@@ -21,7 +21,11 @@
         </tr>
 
         @foreach ($usuarios as $usuario)
-        <tr>
+        @if (Auth::user()->admin <> 0)
+            <tr style="background-color: #adb5bd">
+        @else
+            <tr style="background: none">
+        @endif
             <td>{{ $usuario->id }}</td>
             <td>{{ $usuario->name }}</td>
             <td>{{ $usuario->email }}</td>

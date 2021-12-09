@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UsuariosController extends Controller
@@ -37,38 +38,35 @@ class UsuariosController extends Controller
     // Ações de login
     public function login(Request $form)
     {
-        // Está enviando o formulário
+
+        // // Está enviando o formulário
         if ($form->isMethod('POST'))
         {
-            $usuario = $form->username;
-            $password = $form->password;
+            $credenciais = $form->validate([
+                'username' => ['required'],
+                'password' => ['required'],
+            ]);
 
-            $consulta = Usuario::select('id', 'name', 'email', 'username', 'password')->where('usuario', $usuario)->get();
-
-            // Confere se encontrou algum usuário
-            if ($consulta->count())
+            if(Auth::attempt($credenciais))
             {
-                // Confere se a password está correta
-                if (Hash::check($password, $consulta[0]->password))
-                {
-                    unset($consulta[0]->password);
-
-                    session()->put('usuario', $consulta[0]);
-
-                    return redirect()->route('home');
-                }
+                session()->regenerate();
+                return redirect()->route('home');
             }
-
-            // Login deu errado (usuário ou password inválidos)
-            return redirect()->route('login')->with('erro', 'Usuário ou password inválidos.');
+            else
+            {
+                return redirect()->route('login')->with('erro','Usuário ou senha inválidos.');
+            }
         }
 
         return view('usuarios.login');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        session()->forget('username');
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect()->route('home');
     }
 }

@@ -10,6 +10,10 @@ class Usuario extends Model implements Authenticatable
 {
     use HasFactory;
 
+    protected $hidden = [
+        'password',
+    ];
+    
     public function getAuthIdentifierName()
     {
         return 'id';
