@@ -28,6 +28,12 @@
                 <input type="password" class="form-control" id="senha" name="password">
             </div>
 
+            <div class="checkbox mb-3">
+                <label>
+                  <input type="checkbox" value="1" name="admin"> Administrador
+                </label>
+              </div>
+            
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary">Gravar</button>
             </div>

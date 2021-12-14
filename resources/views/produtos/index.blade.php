@@ -28,9 +28,9 @@
             </td>
             <td>R$ {{$prod->preco}}</td>
             <td>
-                @if (Auth::user()->admin == 0)
+                @if (Auth::user() && Auth::user()->admin == 1)
                     <a href="{{ route('produtos.edit', $prod) }}" class="btn btn-primary btn-sm" role="button"><i class="bi bi-pencil-square"></i> Editar</a>
-                    <a href="{{ route('produtos.remove', $prod) }}" class="btn btn-danger btn-sm" role="button"><i class="bi bi-trash"></i> Apagar</a>
+                    <a href="{{ route('produtos.remove', $prod) }}" class="btn btn-danger btn-sm" role="button"><i class="bi bi-trash"></i> Apagar</a>                    
                 @endif
             </td>
         </tr>

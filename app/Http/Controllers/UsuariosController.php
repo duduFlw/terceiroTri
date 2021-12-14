@@ -28,6 +28,7 @@ class UsuariosController extends Controller
         $usuario->name = $form->name;
         $usuario->email = $form->email;
         $usuario->username = $form->username;
+        $usuario->admin = $form->admin;
         $usuario->password = Hash::make($form->password);
 
         $usuario->save();
@@ -41,13 +42,15 @@ class UsuariosController extends Controller
 
         // // Está enviando o formulário
         if ($form->isMethod('POST'))
-        {
+        {   
+            $remember = $form->rememberme;
+            
             $credenciais = $form->validate([
                 'username' => ['required'],
                 'password' => ['required'],
             ]);
 
-            if(Auth::attempt($credenciais))
+            if(Auth::attempt($credenciais, $remember))
             {
                 session()->regenerate();
                 return redirect()->route('home');
@@ -56,6 +59,7 @@ class UsuariosController extends Controller
             {
                 return redirect()->route('login')->with('erro','Usuário ou senha inválidos.');
             }
+
         }
 
         return view('usuarios.login');

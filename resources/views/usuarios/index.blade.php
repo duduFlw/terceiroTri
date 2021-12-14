@@ -19,13 +19,12 @@
             <th width="50%">Nome</th>
             <th>E-mail</th>
         </tr>
-
-        @foreach ($usuarios as $usuario)
-        @if (Auth::user()->admin <> 0)
-            <tr style="background-color: #adb5bd">
+        @if (Auth::user() && Auth::user()->admin == 1)
+        <tr style="background-color: #adb5bd">
         @else
-            <tr style="background: none">
+        <tr style="background: none">
         @endif
+        @foreach ($usuarios as $usuario)
             <td>{{ $usuario->id }}</td>
             <td>{{ $usuario->name }}</td>
             <td>{{ $usuario->email }}</td>

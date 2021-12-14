@@ -10,6 +10,7 @@ class Usuario extends Model implements Authenticatable
 {
     use HasFactory;
 
+
     protected $hidden = [
         'password',
     ];
@@ -28,9 +29,17 @@ class Usuario extends Model implements Authenticatable
         return $this ->password;
     }
 
-    public function getRememberToken(){}
-    public function setRememberToken($value){}
-    public function getRememberTokenName(){}
+    public function getRememberToken(){
+
+        return $this ->remember;
+
+    }
+    public function setRememberToken($value){
+
+    }
+    public function getRememberTokenName(){
+        return $this ->remember;
+    }
     public $timestamps = false;
 }
     
