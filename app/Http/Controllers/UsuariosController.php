@@ -36,6 +36,34 @@ class UsuariosController extends Controller
         return redirect()->route('usuarios.index');
     }
 
+    public function edit(Usuario $usuario)
+    {
+        return view('usuarios.edit', ['id' => $usuario, 'pagina' => 'usuarios']);
+    }
+
+    public function update(Request $form, Usuario $usuario)
+    {
+        $usuario->name = $form->name;
+        $usuario->email = $form->email;
+
+        $usuario->save();
+
+        return redirect()->route('usuarios');
+    }
+
+    public function remove(Usuario $usuario)
+    {
+        return view('usuarios.remove', ['id' => $usuario, 'pagina' => 'usuarios']);
+    }
+
+    public function delete(Usuario $usuario)
+    {
+        $usuario->delete();
+
+        return redirect()->route('usuarios');
+    }
+
+
     // Ações de login
     public function login(Request $form)
     {

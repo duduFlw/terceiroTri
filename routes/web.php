@@ -21,6 +21,16 @@ Route::get('/', function () {
 
 Route::get('produtos', [ProdutosController::class, 'index'])->name('produtos');
 
+Route::get('/usuarios', [UsuariosController::class, 'usuario'])->name('usuario');
+
+Route::get('/usuarios/{user}/editar', [UsuariosController::class, 'edit'])->name('usuario.edit');
+
+Route::get('/usuarios/{user}/editar', [UsuariosController::class, 'update'])->name('usuario.update');
+
+Route::get('/usuarios/{user}/apagar', [UsuariosController::class, 'remove'])->name('usuario.remove');
+
+Route::delete('/usuarios/{user}/apagar', [UsuariosController::class, 'delete'])->name('usuario.delete');
+
 Route::get('/produtos/inserir', [ProdutosController::class, 'create'])->name('produtos.inserir');
 
 Route::post('/produtos/inserir', [ProdutosController::class, 'insert'])->name('produtos.gravar');
