@@ -37,6 +37,10 @@ Route::post('/produtos/inserir', [ProdutosController::class, 'insert'])->name('p
 
 Route::get('/produtos/{prod}', [ProdutosController::class, 'show'])->name('produtos.show');
 
+Route::post('/produtos/recortar', [ProdutosController::class, 'show'])->name('produtos.recortar');
+
+Route::get('/produtos/recortar', [ProdutosController::class, 'cut'])->name('produtos.recortar');
+
 Route::get('/produtos/{prod}/editar', [ProdutosController::class, 'edit'])->name('produtos.edit');
 
 Route::put('/produtos/{prod}/editar', [ProdutosController::class, 'update'])->name('produtos.update');
